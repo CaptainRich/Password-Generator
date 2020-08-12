@@ -134,8 +134,9 @@ function verifyPassword(funnyCharacters, passWord, passWordLength, allowLowerCas
   var haveLowerCase = false;
   for (var i = 0; i < passWordLength; i++) {
     var characterToTest = passWord[i];
+    var asciiValue = characterToTest.charCodeAt(0);    // get the ascii code for the character
 
-    if (characterToTest == characterToTest.toLowerCase()) {
+    if (asciiValue > 96  && asciiValue < 123) {
       haveLowerCase = true;
       break;                 // no need to test further
     }
@@ -144,8 +145,9 @@ function verifyPassword(funnyCharacters, passWord, passWordLength, allowLowerCas
   var haveUpperCase = false;
   for (var i = 0; i < passWordLength; i++) {
     var characterToTest = passWord[i];
+    var asciiValue = characterToTest.charCodeAt(0);    // get the ascii code for the character
 
-    if (characterToTest == characterToTest.toUpperCase()) {
+    if (asciiValue > 64  && asciiValue < 91) {
       haveUpperCase = true;
       break;                 // no need to test further
     }
@@ -153,19 +155,21 @@ function verifyPassword(funnyCharacters, passWord, passWordLength, allowLowerCas
 
   var haveNumbers = false;
   for (var i = 0; i < passWordLength; i++) {
-    var characterToTest = parseInt(passWord[i], 10);
+    var characterToTest = passWord[i];
+    var asciiValue = characterToTest.charCodeAt(0);    // get the ascii code for the character
 
-    if (Number.isFinite(characterToTest)) {
-      haveNumber = true;
+    if (asciiValue > 47  && asciiValue < 58 ) {
+      haveNumbers = true;
       break;                 // no need to test further
     }
   }
 
   var haveSpecials = false;
   for (var i = 0; i < passWordLength; i++) {
-    var characterToTest = parseInt(passWord[i], 10);
 
-    if (funnyCharacters.indexOf(passWord.value.charAt(i)) != -1) {
+    var characterToTest = passWord[i];
+    if( funnyCharacters.indexOf(characterToTest) != -1 ) {
+    //if (funnyCharacters.indexOf(passWord.value.charAt(i)) != -1) {
       haveSpecials = true;
       break;                 // no need to test further
     }
@@ -189,6 +193,8 @@ function verifyPassword(funnyCharacters, passWord, passWordLength, allowLowerCas
   if( !(allowSpecials && haveSpecials) ) {
     requirementSatisfied = false;
   }
+
+  return requirementSatisfied;
   
 }
 
@@ -239,6 +245,9 @@ function buildPassword( passWordLength, allowLowerCase, allowUpperCase, allowNum
     requirementSatisfied = verifyPassword( funnyCharacters, passWord, passWordLength, allowLowerCase, allowUpperCase, allowNumbers, allowSpecials );
 
   }
+
+  // Have a password that meets requirements.
+  console.log( "The generated password is: ", passWord );
 
 }
 
