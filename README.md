@@ -43,4 +43,4 @@ The deployment link to display the updated web page is:
 
 ## Application Screen Shot
 
-[Password Generator Image](https://github.com/CaptainRich/password-generator/blob/master/screenshot.jpg)
+[Password Generator Image](screenshot.jpg)
