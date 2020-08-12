@@ -110,6 +110,90 @@ function shuffle( characterSet1 ) {
 }
 
 ///////////////////////////////////////////////////////////////////////////
+function formPassWord( characterSet2, passWordLength, passWordLength ) {
+
+  // Loop over the desired length, and extract that many characters, from random positionss
+  // in characterSet2, and stuff them into the passWord string.
+
+  var passWord = "";
+
+  for( var i = 0; i < passWordLength; i++ ) {
+    indexRandom = Math.floor( Math.random() * passWordLength );
+    passWord += characterSet2[indexRandom];
+  }
+
+  return passWord;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+function verifyPassword(funnyCharacters, passWord, passWordLength, allowLowerCase, allowUpperCase, allowNumbers, allowSpecials) {
+
+  // Define another set of boolean values indicating if we have satisfied the four component requirements.
+  // We will set each of these "tracker variables" to "true" as a corresponding character is found.
+
+  var haveLowerCase = false;
+  for (var i = 0; i < passWordLength; i++) {
+    var characterToTest = passWord[i];
+
+    if (characterToTest == characterToTest.toLowerCase()) {
+      haveLowerCase = true;
+      break;                 // no need to test further
+    }
+  }
+
+  var haveUpperCase = false;
+  for (var i = 0; i < passWordLength; i++) {
+    var characterToTest = passWord[i];
+
+    if (characterToTest == characterToTest.toUpperCase()) {
+      haveUpperCase = true;
+      break;                 // no need to test further
+    }
+  }
+
+  var haveNumbers = false;
+  for (var i = 0; i < passWordLength; i++) {
+    var characterToTest = parseInt(passWord[i], 10);
+
+    if (Number.isFinite(characterToTest)) {
+      haveNumber = true;
+      break;                 // no need to test further
+    }
+  }
+
+  var haveSpecials = false;
+  for (var i = 0; i < passWordLength; i++) {
+    var characterToTest = parseInt(passWord[i], 10);
+
+    if (funnyCharacters.indexOf(passWord.value.charAt(i)) != -1) {
+      haveSpecials = true;
+      break;                 // no need to test further
+    }
+  }
+
+  // Now compare what we have with what is required.
+
+  var requirementSatisfied = true;    // assume we're good
+
+  if( !(allowLowerCase && haveLowerCase) ) {
+    requirementSatisfied = false;
+  }
+  if( !(allowUpperCase && haveUpperCase) ) {
+    requirementSatisfied = false;
+  }
+
+  if( !(allowNumbers && haveNumbers) ) {
+    requirementSatisfied = false;
+  }
+  
+  if( !(allowSpecials && haveSpecials) ) {
+    requirementSatisfied = false;
+  }
+  
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 function buildPassword( passWordLength, allowLowerCase, allowUpperCase, allowNumbers, allowSpecials ) {
 
   // Define the various character sets that possible make up the password.
@@ -141,7 +225,20 @@ function buildPassword( passWordLength, allowLowerCase, allowUpperCase, allowNum
   // Shuffle the character set (into the working set of characters)
   characterSet2 = shuffle( characterSet1 );
 
+  // When building the password, we will pick random characters from characterSet 2.
+  // When the password (of the desired length is complete), we must insure that we
+  // have characters from each of the required categories.
 
+  var requirementSatisfied = false;
+
+  while( !requirementSatisfied ) {
+    // Construct the password string
+    passWord = formPassWord( characterSet2, passWordLength, passWordLength );
+
+    // Verify that the password string meets requirements
+    requirementSatisfied = verifyPassword( funnyCharacters, passWord, passWordLength, allowLowerCase, allowUpperCase, allowNumbers, allowSpecials );
+
+  }
 
 }
 
