@@ -74,6 +74,40 @@ function getSpecials() {
   return allowSpecials;
 }
 
+///////////////////////////////////////////////////////////////////////////
+function shuffle( characterSet1 ) {
+
+  var characterSet2 = ""; // shuffled version of "characterSet1"
+
+  // Convert characterSet1 from a string to an array of individual characters
+  var arraySet1 = characterSet1.split('');
+
+
+  // Determine the length of the character set we have to work with
+  var setLength = characterSet1.length;
+
+  // Make one pass through the working character set, and substitute a random replacement 
+  // into characterSet2.  We will set characters in set1 to "null" when they have been pulled
+  // into set2.
+
+  var indexRandom = Math.floor( Math.random() * setLength+1 );  // starting random position
+
+  for( var i = 0; i < setLength; i++ ) {   // loop over the positions in characterSet2
+
+    // Determine an untouched random position in the characterSet1.  Touched positions will be "null".
+    while( arraySet1[indexRandom] === null ) {
+      indexRandom = Math.floor( Math.random() * setLength );
+    }
+
+    // Take the randomly located character from set1 and put it in the current position [i] of set2.
+    // Then set the character position in set1 to "null" so it can't be selected again.
+    characterSet2 += arraySet1[indexRandom];
+    arraySet1[indexRandom] = null;
+
+  }
+
+  return characterSet2;
+}
 
 ///////////////////////////////////////////////////////////////////////////
 function buildPassword( passWordLength, allowLowerCase, allowUpperCase, allowNumbers, allowSpecials ) {
@@ -83,10 +117,9 @@ function buildPassword( passWordLength, allowLowerCase, allowUpperCase, allowNum
   var lowerCaseLetters  = "abcdefghihklmnopqrstuvwxyz";
   var upperCaseLetters  = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   var numberCharacters  = "1234567890";
-  var specialCharacters = "!@#$%^&*()_+=-?><,.:;[]{}/~|";
+  var funnyCharacters = "!@#$%^&*()_+=-?><,.:;[]{}/~";
 
   var characterSet1 = ""; // the combined set of password characters based on the user's selections
-  var characterSet2 = ""; // shuffled version of "characterSet1"
 
   if( allowLowerCase ) {  // include lower case letters if requested
     characterSet1 += lowerCaseLetters;
@@ -101,10 +134,12 @@ function buildPassword( passWordLength, allowLowerCase, allowUpperCase, allowNum
   }
   
   if( allowSpecials ) {  // include special characters if requested
-    characterSet1 += specialCharacters;
+    characterSet1 += funnyCharacters;
   }
 
-  var setLength = characterSet1.length;
+
+  // Shuffle the character set (into the working set of characters)
+  characterSet2 = shuffle( characterSet1 );
 
 
 
