@@ -117,7 +117,7 @@ function buildPassword( passWordLength, allowLowerCase, allowUpperCase, allowNum
   var lowerCaseLetters  = "abcdefghihklmnopqrstuvwxyz";
   var upperCaseLetters  = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   var numberCharacters  = "1234567890";
-  var funnyCharacters = "!@#$%^&*()_+=-?><,.:;[]{}/~";
+  var funnyCharacters = "!@#$%^&*()_+=-?><,.:;[]{}/~|";
 
   var characterSet1 = ""; // the combined set of password characters based on the user's selections
 
