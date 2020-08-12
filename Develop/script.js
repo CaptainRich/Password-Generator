@@ -137,6 +137,13 @@ function formPassWord( characterSet2, characterSet3, passWordLength, passWordLen
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 function verifyPassword(funnyCharacters, passWord, passWordLength, allowLowerCase, allowUpperCase, allowNumbers, allowSpecials) {
 
+  // Verify the length of the generated password.
+
+  if( passWord.length !== passWordLength ){
+      window.alert( "Error, the generated password length is different from the required length. ");
+  }
+
+
   // Define another set of boolean values indicating if we have satisfied the four component requirements.
   // We will set each of these "tracker variables" to "true" as a corresponding character is found.
 
