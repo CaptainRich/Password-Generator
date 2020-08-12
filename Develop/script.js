@@ -110,16 +110,25 @@ function shuffle( characterSet1 ) {
 }
 
 ///////////////////////////////////////////////////////////////////////////
-function formPassWord( characterSet2, passWordLength, passWordLength ) {
+function formPassWord( characterSet2, characterSet3, passWordLength, passWordLength ) {
 
   // Loop over the desired length, and extract that many characters, from random positionss
-  // in characterSet2, and stuff them into the passWord string.
+  // in characterSet2 & characterSet3, and stuff them into the passWord string.
 
-  var passWord = "";
+  var passWord  = "";
+  var setLength = characterSet2.length;
 
   for( var i = 0; i < passWordLength; i++ ) {
-    indexRandom = Math.floor( Math.random() * passWordLength );
-    passWord += characterSet2[indexRandom];
+    indexRandom = Math.floor( Math.random() * setLength );
+
+    if( (i%2) ) {
+        // If "i" is odd, use characterSet2, if even use characterSet3
+        passWord += characterSet2[indexRandom];
+    }
+    else {  // even value of loop index
+        passWord += characterSet3[indexRandom];
+    }
+  
   }
 
   return passWord;
@@ -230,6 +239,7 @@ function buildPassword( passWordLength, allowLowerCase, allowUpperCase, allowNum
 
   // Shuffle the character set (into the working set of characters)
   characterSet2 = shuffle( characterSet1 );
+  characterSet3 = shuffle( characterSet2 );
 
   // When building the password, we will pick random characters from characterSet 2.
   // When the password (of the desired length is complete), we must insure that we
@@ -239,7 +249,7 @@ function buildPassword( passWordLength, allowLowerCase, allowUpperCase, allowNum
 
   while( !requirementSatisfied ) {
     // Construct the password string
-    passWord = formPassWord( characterSet2, passWordLength, passWordLength );
+    passWord = formPassWord( characterSet2, characterSet3, passWordLength, passWordLength );
 
     // Verify that the password string meets requirements
     requirementSatisfied = verifyPassword( funnyCharacters, passWord, passWordLength, allowLowerCase, allowUpperCase, allowNumbers, allowSpecials );
@@ -263,7 +273,16 @@ function generatePassword() {
   var allowNumbers   = getNumbers();
   var allowSpecials  = getSpecials();
 
+  // Verify that at least one character set was selected.
+  var somethingSelected = allowLowerCase | allowUpperCase | allowNumbers | allowSpecials;
+  if( !somethingSelected ) {
+    window.alert( "Error, you must select at least one character set, please try again." );
+    generatePassword();
+  }
+
   // Build the password according to the criteria.
 
   generatedPassWord = buildPassword( passWordLength, allowLowerCase, allowUpperCase, allowNumbers,           allowSpecials );
+
+  return passWord;
 }

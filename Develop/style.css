@@ -72,6 +72,10 @@ header {
   clear: both;
 }
 
+header h1, .card-header h2{
+  color: hsl(360, 91%, 36%);
+}
+
 .btn {
   border: none;
   background-color: hsl(360, 91%, 36%);
