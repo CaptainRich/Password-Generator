@@ -195,18 +195,18 @@ function verifyPassword(funnyCharacters, passWord, passWordLength, allowLowerCas
 
   var requirementSatisfied = true;    // assume we're good
 
-  if( !(allowLowerCase && haveLowerCase) ) {
+  if( allowLowerCase && !haveLowerCase) ) {
     requirementSatisfied = false;
   }
-  if( !(allowUpperCase && haveUpperCase) ) {
+  if( allowUpperCase && !haveUpperCase) ) {
     requirementSatisfied = false;
   }
 
-  if( !(allowNumbers && haveNumbers) ) {
+  if( allowNumbers && !haveNumbers) ) {
     requirementSatisfied = false;
   }
   
-  if( !(allowSpecials && haveSpecials) ) {
+  if( allowSpecials && !haveSpecials) ) {
     requirementSatisfied = false;
   }
 
@@ -264,8 +264,9 @@ function buildPassword( passWordLength, allowLowerCase, allowUpperCase, allowNum
   }
 
   // Have a password that meets requirements.
+ 
   console.log( "The generated password is: ", passWord );
-
+  return password;
 }
 
 
@@ -289,7 +290,7 @@ function generatePassword() {
 
   // Build the password according to the criteria.
 
-  generatedPassWord = buildPassword( passWordLength, allowLowerCase, allowUpperCase, allowNumbers,           allowSpecials );
+  generatedPassWord = buildPassword( passWordLength, allowLowerCase, allowUpperCase, allowNumbers,  allowSpecials );
 
   return passWord;
 }
