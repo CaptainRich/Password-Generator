@@ -148,46 +148,54 @@ function verifyPassword(funnyCharacters, passWord, passWordLength, allowLowerCas
   // We will set each of these "tracker variables" to "true" as a corresponding character is found.
 
   var haveLowerCase = false;
-  for (var i = 0; i < passWordLength; i++) {
-    var characterToTest = passWord[i];
-    var asciiValue = characterToTest.charCodeAt(0);    // get the ascii code for the character
+  if (allowLowerCase) {  // only need to perform this check if lower case letters are required.
+    for (var i = 0; i < passWordLength; i++) {
+      var characterToTest = passWord[i];
+      var asciiValue = characterToTest.charCodeAt(0);    // get the ascii code for the character
 
-    if (asciiValue > 96  && asciiValue < 123) {
-      haveLowerCase = true;
-      break;                 // no need to test further
+      if (asciiValue > 96 && asciiValue < 123) {
+        haveLowerCase = true;
+        break;                 // no need to test further
+      }
     }
   }
 
   var haveUpperCase = false;
-  for (var i = 0; i < passWordLength; i++) {
-    var characterToTest = passWord[i];
-    var asciiValue = characterToTest.charCodeAt(0);    // get the ascii code for the character
+  if (allowUpperCase) {  // only need to perform this check if upper case letters are required.
+    for (var i = 0; i < passWordLength; i++) {
+      var characterToTest = passWord[i];
+      var asciiValue = characterToTest.charCodeAt(0);    // get the ascii code for the character
 
-    if (asciiValue > 64  && asciiValue < 91) {
-      haveUpperCase = true;
-      break;                 // no need to test further
+      if (asciiValue > 64 && asciiValue < 91) {
+        haveUpperCase = true;
+        break;                 // no need to test further
+      }
     }
   }
 
   var haveNumbers = false;
-  for (var i = 0; i < passWordLength; i++) {
-    var characterToTest = passWord[i];
-    var asciiValue = characterToTest.charCodeAt(0);    // get the ascii code for the character
+  if (allowNumbers) {  // only need to perform this check if numbers are required.
+    for (var i = 0; i < passWordLength; i++) {
+      var characterToTest = passWord[i];
+      var asciiValue = characterToTest.charCodeAt(0);    // get the ascii code for the character
 
-    if (asciiValue > 47  && asciiValue < 58 ) {
-      haveNumbers = true;
-      break;                 // no need to test further
+      if (asciiValue > 47 && asciiValue < 58) {
+        haveNumbers = true;
+        break;                 // no need to test further
+      }
     }
   }
 
   var haveSpecials = false;
-  for (var i = 0; i < passWordLength; i++) {
+  if (allowSpecials) {   // only perform this check if special characters are required.
+    for (var i = 0; i < passWordLength; i++) {
 
-    var characterToTest = passWord[i];
-    if( funnyCharacters.indexOf(characterToTest) != -1 ) {
-    //if (funnyCharacters.indexOf(passWord.value.charAt(i)) != -1) {
-      haveSpecials = true;
-      break;                 // no need to test further
+      var characterToTest = passWord[i];
+      if (funnyCharacters.indexOf(characterToTest) != -1) {
+        //if (funnyCharacters.indexOf(passWord.value.charAt(i)) != -1) {
+        haveSpecials = true;
+        break;                 // no need to test further
+      }
     }
   }
 
@@ -195,18 +203,18 @@ function verifyPassword(funnyCharacters, passWord, passWordLength, allowLowerCas
 
   var requirementSatisfied = true;    // assume we're good
 
-  if( allowLowerCase && !haveLowerCase) ) {
+  if( allowLowerCase && !haveLowerCase)  {
     requirementSatisfied = false;
   }
-  if( allowUpperCase && !haveUpperCase) ) {
+  if( allowUpperCase && !haveUpperCase)  {
     requirementSatisfied = false;
   }
 
-  if( allowNumbers && !haveNumbers) ) {
+  if( allowNumbers && !haveNumbers)  {
     requirementSatisfied = false;
   }
   
-  if( allowSpecials && !haveSpecials) ) {
+  if( allowSpecials && !haveSpecials)  {
     requirementSatisfied = false;
   }
 
