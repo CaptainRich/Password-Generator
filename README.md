@@ -27,7 +27,7 @@ GIVEN I need a new, secure password.
 
 ## Deployment Link
 The deployment link to display the updated web page is: 
-[GitHub Pages](https://captainrich.github.io/Password-Generator/).
+[GitHub Pages](https://captainrich.github.io/Password-Generator/Develop).  
 
 ## Password Generation Logic
 
