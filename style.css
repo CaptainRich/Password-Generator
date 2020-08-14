@@ -74,6 +74,7 @@ header {
 
 header h1, .card-header h2{
   color: hsl(360, 91%, 36%);
+  text-align: center;
 }
 
 .btn {

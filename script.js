@@ -36,7 +36,7 @@ function getLowerCase() {
   var allowLowerCase = true;                // initialize the return value
 
   // Prompt to allow lower case letters.
-  allowLowerCase = window.confirm( "Allow lower case letters (Ok=Yes or Cancel=No): ") ;
+  allowLowerCase = window.confirm( "Allow lower case letters (abcde....z)\n(Ok=Yes or Cancel=No): ") ;
   
   return allowLowerCase;
 }
@@ -47,7 +47,7 @@ function getUpperCase() {
   var allowUpperCase = true;                // initialize the return value
 
   // Prompt to allow upper case letters.
-  allowUpperCase = window.confirm( "Allow upper case letters (Ok=Yes or Cancel=No): ") ;
+  allowUpperCase = window.confirm( "Allow upper case letters (ABCDE....Z)\n(Ok=Yes or Cancel=No): ") ;
   
   return allowUpperCase;
 }
@@ -58,7 +58,7 @@ function getNumbers() {
   var allowNumbers = true;                // initialize the return value
 
   // Prompt to allow upper case letters.
-  allowNumbers = window.confirm( "Allow numbers (Ok=Yes or Cancel=No): ") ;
+  allowNumbers = window.confirm( "Allow numbers (0123....9)\n(Ok=Yes or Cancel=No): ") ;
   
   return allowNumbers;
 }
@@ -69,7 +69,7 @@ function getSpecials() {
   var allowSpecials = true;                // initialize the return value
 
   // Prompt to allow upper case letters.
-  allowSpecials = window.confirm( "Allow special characters (Ok=Yes or Cancel=No): ") ;
+  allowSpecials = window.confirm( "Allow special characters (!@#$...?><)\n(Ok=Yes or Cancel=No): ") ;
   
   return allowSpecials;
 }
@@ -110,7 +110,7 @@ function shuffle( characterSet1 ) {
 }
 
 ///////////////////////////////////////////////////////////////////////////
-function formPassWord( characterSet2, characterSet3, passWordLength, passWordLength ) {
+function formPassWord( characterSet2, characterSet3, passWordLength ) {
 
   // Loop over the desired length, and extract that many characters, from random positionss
   // in characterSet2 & characterSet3, and stuff them into the passWord string.
@@ -123,7 +123,7 @@ function formPassWord( characterSet2, characterSet3, passWordLength, passWordLen
 
     // Alternate between the two character sets, based on odd/even "loop-index" values.
     if( (i%2) ) {
-        // If "i" is odd, use characterSet2, if even use characterSet3
+        // If "i" is odd, use characterSet2, if "i" is even use characterSet3
         passWord += characterSet2[indexRandom];
     }
     else {  // even value of loop index
