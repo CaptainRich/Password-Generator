@@ -9,7 +9,7 @@ function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
 
-  passwordText.value = password;
+  passwordText.value = password;        // This is the generated password
 
 }
 
@@ -92,11 +92,11 @@ function shuffle( characterSet1 ) {
 
   var indexRandom = Math.floor( Math.random() * setLength+1 );  // starting random position
 
-  for( var i = 0; i < setLength; i++ ) {   // loop over the positions in characterSet2
+  for (var i = 0; i < setLength; i++) {   // loop over the positions to fill in characterSet2
 
-    // Determine an untouched random position in the characterSet1.  Touched positions will be "null".
-    while( arraySet1[indexRandom] === null ) {
-      indexRandom = Math.floor( Math.random() * setLength );
+    // Determine an untouched random position in the characterSet1.  Touched positions will be "null", meaning the character that "was" there has already been moved to characterSet2.
+    while (arraySet1[indexRandom] === null) {
+      indexRandom = Math.floor(Math.random() * setLength);
     }
 
     // Take the randomly located character from set1 and put it in the current position [i] of set2.
@@ -121,6 +121,7 @@ function formPassWord( characterSet2, characterSet3, passWordLength, passWordLen
   for( var i = 0; i < passWordLength; i++ ) {
     indexRandom = Math.floor( Math.random() * setLength );
 
+    // Alternate between the two character sets, based on odd/even "loop-index" values.
     if( (i%2) ) {
         // If "i" is odd, use characterSet2, if even use characterSet3
         passWord += characterSet2[indexRandom];
@@ -153,7 +154,7 @@ function verifyPassword(funnyCharacters, passWord, passWordLength, allowLowerCas
       var characterToTest = passWord[i];
       var asciiValue = characterToTest.charCodeAt(0);    // get the ascii code for the character
 
-      if (asciiValue > 96 && asciiValue < 123) {
+      if (asciiValue > 96 && asciiValue < 123) {         // Do we have a-z ?
         haveLowerCase = true;
         break;                 // no need to test further
       }
@@ -166,7 +167,7 @@ function verifyPassword(funnyCharacters, passWord, passWordLength, allowLowerCas
       var characterToTest = passWord[i];
       var asciiValue = characterToTest.charCodeAt(0);    // get the ascii code for the character
 
-      if (asciiValue > 64 && asciiValue < 91) {
+      if (asciiValue > 64 && asciiValue < 91) {          // Do we have A-Z ?
         haveUpperCase = true;
         break;                 // no need to test further
       }
@@ -179,7 +180,7 @@ function verifyPassword(funnyCharacters, passWord, passWordLength, allowLowerCas
       var characterToTest = passWord[i];
       var asciiValue = characterToTest.charCodeAt(0);    // get the ascii code for the character
 
-      if (asciiValue > 47 && asciiValue < 58) {
+      if (asciiValue > 47 && asciiValue < 58) {          // Do we have 0-9 ?
         haveNumbers = true;
         break;                 // no need to test further
       }
@@ -192,7 +193,8 @@ function verifyPassword(funnyCharacters, passWord, passWordLength, allowLowerCas
 
       var characterToTest = passWord[i];
       if (funnyCharacters.indexOf(characterToTest) != -1) {
-        //if (funnyCharacters.indexOf(passWord.value.charAt(i)) != -1) {
+
+        //If the password character is a member of "funnyCharacters"
         haveSpecials = true;
         break;                 // no need to test further
       }
@@ -231,7 +233,7 @@ function buildPassword( passWordLength, allowLowerCase, allowUpperCase, allowNum
   var lowerCaseLetters  = "abcdefghihklmnopqrstuvwxyz";
   var upperCaseLetters  = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   var numberCharacters  = "1234567890";
-  var funnyCharacters = "!@#$%^&*()_+=-?><,.:;[]{}/~|";
+  var funnyCharacters   = "!@#$%^&*()_+=-?><,.:;[]{}/~|";
 
   var characterSet1 = ""; // the combined set of password characters based on the user's selections
 
@@ -256,7 +258,7 @@ function buildPassword( passWordLength, allowLowerCase, allowUpperCase, allowNum
   characterSet2 = shuffle( characterSet1 );
   characterSet3 = shuffle( characterSet2 );
 
-  // When building the password, we will pick random characters from characterSet 2.
+  // When building the password, we will pick random characters from both characterSet2 and characterSet3.
   // When the password (of the desired length is complete), we must insure that we
   // have characters from each of the required categories.
 
@@ -264,7 +266,7 @@ function buildPassword( passWordLength, allowLowerCase, allowUpperCase, allowNum
 
   while( !requirementSatisfied ) {
     // Construct the password string
-    passWord = formPassWord( characterSet2, characterSet3, passWordLength, passWordLength );
+    passWord = formPassWord( characterSet2, characterSet3, passWordLength );
 
     // Verify that the password string meets requirements
     requirementSatisfied = verifyPassword( funnyCharacters, passWord, passWordLength, allowLowerCase, allowUpperCase, allowNumbers, allowSpecials );
@@ -291,6 +293,7 @@ function generatePassword() {
 
   // Verify that at least one character set was selected.
   var somethingSelected = allowLowerCase | allowUpperCase | allowNumbers | allowSpecials;
+
   if( !somethingSelected ) {
     window.alert( "Error, you must select at least one character set, please try again." );
     generatePassword();

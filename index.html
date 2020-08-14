@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -19,7 +20,7 @@
           <h2>Generate a Password</h2>
         </div>
         
-
+        <!-- Define the region where the generated password will go-->
         <div class="card-body">
           <textarea
             readonly
@@ -29,6 +30,7 @@
           ></textarea>
         </div>
 
+        <!-- Invoke the process of acquring user input and generating the password. -->
         <div class="card-footer">
           <button id="generate" class="btn">Generate Password</button>
         </div>
@@ -36,6 +38,7 @@
       </div>
     </div>
     
+    <!-- Load the Javascript file that does all the work.-->
     <script src="script.js"></script>
   </body>
 </html>
