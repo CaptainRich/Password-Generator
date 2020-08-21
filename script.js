@@ -6,10 +6,10 @@ var generateBtn = document.querySelector("#generate");
 
 // Write password to the #password input
 function writePassword() {
-  var password = generatePassword();
+  var createdPassword = generatePassword();
   var passwordText = document.querySelector("#password");
 
-  passwordText.value = password;        // This is the generated password
+  passwordText.value = createdPassword;        // This is the generated password
 
 }
 
@@ -255,8 +255,8 @@ function buildPassword( passWordLength, allowLowerCase, allowUpperCase, allowNum
 
 
   // Shuffle the character set (into the working set of characters)
-  characterSet2 = shuffle( characterSet1 );
-  characterSet3 = shuffle( characterSet2 );
+  var characterSet2 = shuffle( characterSet1 );
+  var characterSet3 = shuffle( characterSet2 );
 
   // When building the password, we will pick random characters from both characterSet2 and characterSet3.
   // When the password (of the desired length is complete), we must insure that we
@@ -266,7 +266,7 @@ function buildPassword( passWordLength, allowLowerCase, allowUpperCase, allowNum
 
   while( !requirementSatisfied ) {
     // Construct the password string
-    passWord = formPassWord( characterSet2, characterSet3, passWordLength );
+    var passWord = formPassWord( characterSet2, characterSet3, passWordLength );
 
     // Verify that the password string meets requirements
     requirementSatisfied = verifyPassword( funnyCharacters, passWord, passWordLength, allowLowerCase, allowUpperCase, allowNumbers, allowSpecials );
@@ -276,12 +276,14 @@ function buildPassword( passWordLength, allowLowerCase, allowUpperCase, allowNum
   // Have a password that meets requirements.
  
   console.log( "The generated password is: ", passWord );
-  return password;
+  return passWord;
 }
 
 
 ///////////////////////////////////////////////////////////////////////////
 function generatePassword() {
+
+  var createdPassWord = "";
 
   // First, obtain the characteristics of the password to be generated.
 
@@ -296,12 +298,14 @@ function generatePassword() {
 
   if( !somethingSelected ) {
     window.alert( "Error, you must select at least one character set, please try again." );
-    generatePassword();
+    createdPassWord = generatePassword();
   }
 
   // Build the password according to the criteria.
 
-  generatedPassWord = buildPassword( passWordLength, allowLowerCase, allowUpperCase, allowNumbers,  allowSpecials );
+  if (createdPassWord == 0) {
+    createdPassWord = buildPassword(passWordLength, allowLowerCase, allowUpperCase, allowNumbers, allowSpecials);
+  }
 
-  return passWord;
+  return createdPassWord;
 }
